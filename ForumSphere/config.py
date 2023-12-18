@@ -8,7 +8,6 @@ from flask_appbuilder.security.manager import (
 )
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-
 # Your App secret key
 SECRET_KEY = "ForumSphereSecretKey12345"
 
@@ -81,6 +80,7 @@ LANGUAGES = {
 # ---------------------------------------------------
 # Image and file configuration
 # ---------------------------------------------------
+FAB_ADDON_TEMPLATE_FOLDER = 'ForumSphere/app/templates/'
 # The file upload folder, when using models with files
 UPLOAD_FOLDER = basedir + "/app/static/uploads/"
 

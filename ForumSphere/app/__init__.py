@@ -10,8 +10,11 @@ from flask_sqlalchemy import SQLAlchemy
 """
 
 app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:AdminadminAdmin@localhost/sys'  # SQLite for simplicity
 db = SQLAlchemy(app)
+
+appbuilder = AppBuilder(base_template='mybase.html')
 
 logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
 logging.getLogger().setLevel(logging.DEBUG)

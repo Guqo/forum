@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Flask App</title>
+    <title>{{ thread.title }}</title>
 </head>
-WELCOME HERE
+
+<body>
+    <h1>{{ thread.title }}</h1>
+    <p>{{ thread.content }}</p>
+</body>
 
 </html>
