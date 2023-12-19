@@ -37,6 +37,25 @@ APP_NAME = "forumsphere"
 # AUTH_LDAP : Is for LDAP
 # AUTH_REMOTE_USER : Is for using REMOTE_USER from web server
 AUTH_TYPE = AUTH_DB
+AUTH_TYPE = AUTH_OAUTH
+AUTH_USER_REGISTRATION = True
+
+OAUTH_PROVIDERS = [
+    {'name':'google', 'token_key':'access_token',
+     'icon':'fa-google', 'remote_app': {
+         'consumer_key':'GOOGLE_CLIENT_ID',
+         'consumer_secret':'GOOGLE_CLIENT_SECRET',
+         'request_token_params':{
+             'scope': 'email profile'
+         },
+         'base_url':'https://www.googleapis.com/oauth2/v2/',
+         'request_token_url':None,
+         'access_token_url':'https://accounts.google.com/o/oauth2/token',
+         'authorize_url':'https://accounts.google.com/o/oauth2/auth'}
+     },
+    # Konfigurace pro další poskytovatele (GitHub, Facebook, Microsoft)
+]
+
 
 # Uncomment to setup Full admin role name
 # AUTH_ROLE_ADMIN = 'Admin'
