@@ -1,19 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "mybase.html" %}{% block title %}Home - Threads{% endblock %} {% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Threads</title>
-</head>
+<style>
+    .list-group-item:hover {
+        transform: scale(1.01);
+        transition: transform 0.3s ease;
+    }
+    
+    .list-group-item {
+        margin-bottom: 3px;
+    }
+</style>
 
-<body>
-    <h1>Threads</h1>
-    <ul>
+<h1 class="mt-3 text-center">Threads</h1>
+
+<div class="container mt-5">
+    <ul class="list-group">
         {% for thread in threads %}
-        <li><a href="{{ url_for('view_thread', thread_id=thread.id) }}">{{ thread.title }}</a></li>
+        <a class="text-decoration-none" href="{{ url_for('view_thread', thread_id=thread.id) }}">
+            <li class="list-group-item">
+                <h4 class="text-dark">{{ thread.title }}</h4>
+                <div class="card border-0">
+                    <p class="text-dark">{{ thread.content | truncate_content }}</p>
+                </div>
+            </li>
+        </a>
         {% endfor %}
     </ul>
-</body>
-
-</html>
+</div>
+{% endblock %}

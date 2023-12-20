@@ -46,7 +46,7 @@ OAUTH_PROVIDERS = [
          'consumer_key':'GOOGLE_CLIENT_ID',
          'consumer_secret':'GOOGLE_CLIENT_SECRET',
          'request_token_params':{
-             'scope': 'email profile'
+             'scope': 'openid email profile'
          },
          'base_url':'https://www.googleapis.com/oauth2/v2/',
          'request_token_url':None,

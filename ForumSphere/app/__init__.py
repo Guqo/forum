@@ -4,6 +4,7 @@ from flask import Flask
 from flask_appbuilder import AppBuilder, SQLA
 from flask_sqlalchemy import SQLAlchemy
 
+from flask_appbuilder.security.sqla.manager import SecurityManager
 
 """
  Logging configuration
@@ -15,6 +16,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:AdminadminAdmin@localhost
 db = SQLAlchemy(app)
 
 appbuilder = AppBuilder(base_template='mybase.html')
+
+app.config["AUTH_USER_MODEL"] = "models.MyUser"
+app.config["AUTH_TYPE"] = 1
 
 logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
 logging.getLogger().setLevel(logging.DEBUG)
@@ -39,3 +43,12 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 """
 
 from . import views
+
+def truncate_content(content, max_words=50):
+    words = content.split()
+    if len(words) > max_words:
+        truncated_content = ' '.join(words[:max_words]) + '...'
+        return truncated_content
+    return content
+
+app.jinja_env.filters['truncate_content'] = truncate_content
