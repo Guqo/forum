@@ -20,7 +20,7 @@
             <li class="list-group-item">
                 <h4 class="text-dark">{{ thread.title }}</h4>
                 <div class="card border-0">
-                    <p class="text-dark">{{ thread.content | truncate_content }}</p>
+                    <p class="text-dark">{{ thread.content | truncate(150, end=' ...') }}</p>
                 </div>
             </li>
         </a>

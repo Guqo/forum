@@ -3,8 +3,10 @@ import logging
 from flask import Flask
 from flask_appbuilder import AppBuilder, SQLA
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 from flask_appbuilder.security.sqla.manager import SecurityManager
+from flask_appbuilder.security.sqla.models import User
 
 """
  Logging configuration
@@ -14,6 +16,8 @@ app = Flask(__name__)
 app = Flask(__name__, template_folder='templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:AdminadminAdmin@localhost/sys'  # SQLite for simplicity
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+
 
 appbuilder = AppBuilder(base_template='mybase.html')
 
@@ -27,7 +31,6 @@ app = Flask(__name__)
 app.config.from_object("config")
 db = SQLA(app)
 appbuilder = AppBuilder(app, db.session)
-
 
 """
 from sqlalchemy.engine import Engine
@@ -43,12 +46,3 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 """
 
 from . import views
-
-def truncate_content(content, max_words=50):
-    words = content.split()
-    if len(words) > max_words:
-        truncated_content = ' '.join(words[:max_words]) + '...'
-        return truncated_content
-    return content
-
-app.jinja_env.filters['truncate_content'] = truncate_content

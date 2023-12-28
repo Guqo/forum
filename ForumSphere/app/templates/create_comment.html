@@ -1,0 +1,9 @@
+{% extends "mybase.html" %}{% block content %}
+<h1>Create Comment</h1>
+<form method="POST" action="{{ url_for('create_comment') }}">
+    <label for="content">Content:</label>
+    <textarea name="content" id="content" rows="4" required></textarea><br>
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
