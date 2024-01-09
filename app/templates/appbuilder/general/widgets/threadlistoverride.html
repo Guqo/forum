@@ -1,0 +1,61 @@
+{% extends "appbuilder/general/widgets/list.html" %}
+
+    {% block list_header scoped %}
+    {{ super() }}
+	<a href="#" class="btn btn-sm btn-primary" data-toggle="tooltip" rel="tooltip"
+       title="{{_('Back')}}">
+        <i class="fa fa-rocket"></i>
+    </a>
+	{% endblock %}
+
+    {% block begin_content scoped %}
+    {% endblock %}
+
+    {% block begin_loop_header scoped %}
+    {% endblock %}
+
+    {% block begin_loop_values %}
+        {% for item in value_columns %}
+            {% set pk = pks[loop.index-1] %}
+            <div>
+               {% set formatter = formatters_columns.get(value) %}
+               {% if formatter %}
+                   <p>{{ formatter(item['title']) }}, {{ formatter(item['user']) }}</p>
+                   <p>{{ formatter(item['content']) }}</p>
+               {% else %}
+                   <p>{{ item['title'] }}, {{ item['user'] }}</p>
+                   <p>{{ item['content'] }}</p>
+               {% endif %}
+                {% if can_show %}
+                    {% set endpoint = modelview_name + '.show' %}
+                    {% set path = endpoint | safe_url_for(pk=pk) %}
+                    {% if path %}
+                        {% set path = path | set_link_filters(filters) %}
+                        <a href="{{path}}" class="btn btn-sm btn-default" data-toggle="tooltip" rel="tooltip" title="{{_('Show record')}}">Zobrazit</a>
+                    {% endif %}
+                {% endif %}
+                {% if can_edit %}
+                    {% set endpoint = modelview_name + '.edit' %}
+                    {% set path = endpoint | safe_url_for(pk=pk) %}
+                    {% if path %}
+                        {% set path = path | set_link_filters(filters) %}
+                        <a href="{{path}}" class="btn btn-sm btn-success" data-toggle="tooltip" rel="tooltip" title="{{_('Edit record')}}">Editovat</a>
+                    {% endif %}
+                {% endif %}
+                {% if can_delete %}
+                    {% set endpoint = modelview_name + '.delete' %}
+                    {% set path = endpoint | safe_url_for(pk=pk) %}
+                    {% if path %}
+                        {% set path = path | set_link_filters(filters) %}
+                        <a href="{{path}}" class="btn btn-sm btn-danger" data-toggle="tooltip" rel="tooltip" title="{{_('Delete record')}}">Smazat</a>
+                    {% endif %}
+                {% endif %}
+               {% if can_show or can_edit or can_delete %}
+                    <p>{{ lib.btn_crud(can_show, can_edit, can_delete, pk, modelview_name, filters) }}</p>
+               {% endif %}
+            </div>
+        {% endfor %}
+    {% endblock %}
+
+    {% block end_content scoped %}
+    {% endblock %}

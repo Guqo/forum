@@ -1,0 +1,16 @@
+{% import 'appbuilder/general/lib.html' as lib %}
+
+{% extends "mybase.html" %}
+{% block title %}Home - ForumSphere{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Welcome to ForumSphere!</h1>
+    {% if can_add %}
+        {% set endpoint = modelview_name + '.add' %}
+        {% set path = endpoint | safe_url_for %}
+        {% if path %}
+            {% set path = path | set_link_filters(filters) %}
+            {{ lnk_add(path) }}
+        {% endif %}
+    {% endif %}
+{% endblock %}
