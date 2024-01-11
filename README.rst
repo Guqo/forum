@@ -7,8 +7,11 @@ Pro spuštění:
 K běhu aplikace:
 
     $ python -m venv .venv
+
     $ .venv\Scripts\activate
+
     $ pip install -r requirements.txt
+
     $ flask run
 
 Toť vše!
