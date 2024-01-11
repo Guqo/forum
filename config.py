@@ -17,13 +17,13 @@ SECRET_KEY = "ForumSphereSecretKey12345"
 SQLALCHEMY_DATABASE_URI = 'mysql://admin:AdminadminAdmin@localhost/forum'
 
 # Flask-WTF flag for CSRF
-CSRF_ENABLED = False
+CSRF_ENABLED = True
 
 # ------------------------------
 # GLOBALS FOR APP Builder
 # ------------------------------
 # Uncomment to setup Your App name
-APP_NAME = "forumsphere"
+APP_NAME = "ForumSphere"
 
 # Uncomment to setup Setup an App icon
 # APP_ICON = "static/img/logo.jpg"
@@ -129,7 +129,7 @@ IMG_UPLOAD_URL = "/static/uploads/"
 
 AUTH_TYPE = AUTH_DB
 AUTH_USER_REGISTRATION = True
-AUTH_USER_REGISTRATION_ROLE = 'Public'
+AUTH_USER_REGISTRATION_ROLE = 'Logged'
 RECAPTCHA_PUBLIC_KEY = '6Le4Nj8pAAAAALb1mGm8X1-Z1bigXiRElogL_VSd'
 RECAPTCHA_PRIVATE_KEY = '6Le4Nj8pAAAAAGI6fhGNkYyUwCOlssdF5Hz7-uU8'
 MAIL_SERVER = 'smtp.gmail.com'

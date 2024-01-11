@@ -4,7 +4,7 @@ from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder.models.filters import BaseFilter
 from sqlalchemy import or_
 from . import appbuilder, db
-from .models import Thread, Category, ForumUser, Group, Comment
+from .models import Thread, Category, ForumUser, Group
 
 
 class GroupModelApi(ModelRestApi):
@@ -22,14 +22,7 @@ class ThreadModelApi(ModelRestApi):
     datamodel = SQLAInterface(Thread)
 
 
-class CommentModelApi(ModelRestApi):
-    resource_name = 'comment'
-    datamodel = SQLAInterface(Comment)
-
-
 appbuilder.add_api(GroupModelApi)
 appbuilder.add_api(CategoryModelApi)
 appbuilder.add_api(ThreadModelApi)
-appbuilder.add_api(CommentModelApi)
-
 

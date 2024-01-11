@@ -10,7 +10,7 @@ from flask_login import current_user
 from markupsafe import Markup
 
 from . import appbuilder, db
-from .models import Group, Category, Thread, Comment, Reply, ForumUser
+from .models import Group, Category, Thread, ForumUser
 
 log = logging.getLogger(__name__)
 
@@ -43,59 +43,20 @@ class ForumUserModelView(ModelView):
 class ThreadModelView(ModelView):
     datamodel = SQLAInterface(Thread)
 
-    label_columns = {"title": "Titulek", "content": "Obsah", "like": "Obliba",
+    label_columns = {"title": "Titulek", "content": "Obsah",
                      "user": "Autor", "category": "Kategorie", "created_at": "Vytvořeno"}
-    list_columns = ["title", "created_at", "user", "category"]
+    list_columns = ["title", "category", "user", "created_at"]
 
     base_order = ("created_at", "desc")
 
     show_fieldsets = [
-        ("Vlákno", {"fields": ["title", "user"]}),
-        (
-            "Podrobné informace",
-            {
-                "fields": [
-                    "created_at",
-                    "category",
-                    "like",
-                    "content",
-                ],
-                "expanded": False,
-            },
-        ),
-    ]
+        ("Vlákno", {"fields": ["title", "category", "content", "user", "created_at"]})]
 
     add_fieldsets = [
-        ("Vlákno", {"fields": ["title", "user"]}),
-        (
-            "Podrobné informace",
-            {
-                "fields": [
-                    "created_at",
-                    "category",
-                    "like",
-                    "content",
-                ],
-                "expanded": False,
-            },
-        ),
-    ]
+        ("Vlákno", {"fields": ["title", "user", "category", "content"]})]
 
     edit_fieldsets = [
-        ("Vlákno", {"fields": ["title", "user"]}),
-        (
-            "Podrobné informace",
-            {
-                "fields": [
-                    "created_at",
-                    "category",
-                    "like",
-                    "content",
-                ],
-                "expanded": False,
-            },
-        ),
-    ]
+        ("Vlákno", {"fields": ["title", "category", "content", "user", "created_at"]})]
 
     @action(
         "muldelete",
@@ -103,11 +64,12 @@ class ThreadModelView(ModelView):
         Markup("<p>Delete all Really?</p><p>Ok then...</p>"),
         "fa-rocket",
     )
+
     def muldelete(self, items):
         self.datamodel.delete_all(items)
         self.update_redirect()
         return redirect(self.get_redirect())
-
+    
     # Filtrování článků tak, aby uživatelé viděli jen své
     def get_query(self):
         return self.session.query(self.model).filter(self.model.user_id == current_user.id)
@@ -125,7 +87,9 @@ class ThreadListWidgetOverride(ListWidget):
 class ThreadModelViewPublic(ModelView):
     datamodel = SQLAInterface(Thread)
 
-    label_columns = {"title": "Titulek", "content": "Obsah", "like": "Like",
+    # user = thread.user_id = data.get('user_id')
+
+    label_columns = {"title": "Titulek", "content": "Obsah",
                      "user": "Autor", "category": "Kategorie", "created_at": "Vytvořeno"}
     list_columns = ["title", "created_at", "user", "category"]
     base_order = ("created_at", "desc")
@@ -141,35 +105,6 @@ class CategoryModelView(ModelView):
     def __init__(self, **kwargs):
         super(ModelView, self).__init__(**kwargs)
         self.list_title = "Seznam kategorií"
-
-
-class MyView(BaseView):
-
-    default_view = "method1"
-
-    @expose("/method1/")
-    @has_access
-    def method1(self):
-        # do something with param1
-        # and return to previous page or index
-        return "Hello"
-
-    @expose("/method2/<string:param1>")
-    @has_access
-    def method2(self, param1):
-        # do something with param1
-        # and render template with param
-        param1 = "Goodbye %s" % (param1)
-        return param1
-
-    @expose("/method3/<string:param1>")
-    @has_access
-    def method3(self, param1):
-        # do something with param1
-        # and render template with param
-        param1 = "Goodbye %s" % (param1)
-        return self.render_template("method3.html", param1=param1)
-
 
 class MyThreadCreateView(BaseView):
     default_view = "create"
@@ -237,15 +172,7 @@ appbuilder.add_view(
 )
 
 appbuilder.add_view(
-    MyThreadCreateView, "Create thread"
+    MyThreadCreateView, ""
 )
-
-appbuilder.add_view(MyView(), "Method1", category="My View")
-# appbuilder.add_view(
-#     MyView(), "Method2", href='/myview/method2/jonh', category='My View'
-# )
-# Use add link instead there is no need to create MyView twice.
-appbuilder.add_link("Method2", href="/myview/method2/jonh", category="My View")
-appbuilder.add_link("Method3", href="/myview/method3/jonh", category="My View")
 
 log.info("F.A.B. Version: %s", appbuilder.version)
