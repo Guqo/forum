@@ -1,17 +1,18 @@
-ForumSphere
+Base Skeleton to start your application using Flask-AppBuilder
 --------------------------------------------------------------
-Pro spuštění:
 
-	git clone https://github.com/guqo/forum.git
+- Install it::
 
-K běhu aplikace:
+	pip install flask-appbuilder
+	git clone https://github.com/dpgaspar/Flask-AppBuilder-Skeleton.git
 
-    $ python -m venv .venv
+- Run it::
 
-    $ .venv\\Scripts\\activate
-
-    $ pip install -r requirements.txt
-
+    $ export FLASK_APP=app
+    # Create an admin user
+    $ flask fab create-admin
+    # Run dev server
     $ flask run
 
-Toť vše!
+
+That's it!!

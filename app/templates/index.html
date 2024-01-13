@@ -1,7 +1,10 @@
 <!-- extend base layout -->
 {% extends "appbuilder/base.html" %} {% block content %} {% if threads %}
 <h2 class="text-center pb-3">My Threads</h2>
-<br>
+<br> {% else %}
+<!-- Informační hlášení pro nepřihlášené uživatele nebo uživatele bez oprávnění-->
+<p>{{ message }}</p>
+{% endif %}
 <!-- Odkaz pro vytvoření nového článku-->
 {% if appbuilder.sm.has_access('can_add', 'ThreadModelView') %}
 <a href="{{ url_for('ThreadModelView.add') }}"><button type="button" class="btn btn-primary btn-md">
@@ -9,10 +12,7 @@
 </button></a>
 <a href="#" data-toggle="modal" data-target="#createThreadModal"><button type="button" class="btn btn-primary btn-md">
     Create new thread
-</button></a> {% endif %} {% else %}
-<!-- Informační hlášení pro nepřihlášené uživatele nebo uživatele bez oprávnění-->
-<p>{{ message }}</p>
-{% endif %}
+</button></a> {% endif %}
 
 <!-- Zobrazení chatů -->
 {% if can_list %}
@@ -45,7 +45,7 @@
                 <!-- Formulář pro vytvoření článku -->
                 <form id="createThreadForm">
                     <div class="form-group" style="margin: 1%;">
-                        <label style="margin: 1%;" for="thread-title">Create thread</label>
+                        <label style="margin: 1%;" for="thread-title">Create thread with Ajax</label>
                         <input style="margin: 1%;" type="text" class="form-control" id="thread-title" name="title" placeholder="Title" required>
                         <textarea style="margin: 1%;" name="content" id="thread-content" cols="76" rows="3" placeholder="Content"></textarea>
                         <input style="margin: 1%;" type="text" class="form-control" id="thread-user_id" name="user_id" value="1">

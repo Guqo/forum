@@ -53,10 +53,15 @@ class ThreadModelView(ModelView):
         ("Vlákno", {"fields": ["title", "category", "content", "user", "created_at"]})]
 
     add_fieldsets = [
-        ("Vlákno", {"fields": ["title", "user", "category", "content"]})]
+        ("Vlákno", {"fields": ["title", "category", "content"]})]
 
     edit_fieldsets = [
         ("Vlákno", {"fields": ["title", "category", "content", "user", "created_at"]})]
+
+    def pre_add(self, item):
+        item.user = db.session.query(ForumUser).filter_by(id=current_user.id).one_or_none()
+        super(ThreadModelView, self).pre_add(item)
+
 
     @action(
         "muldelete",
@@ -115,7 +120,6 @@ class MyThreadCreateView(BaseView):
         try:
             # Získání dat z AJAXového požadavku
             data = request.form
-            # Přidejte zde další pole a validaci
 
             # Vytvoření a uložení nového článku
             thread = Thread()
