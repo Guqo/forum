@@ -24,10 +24,14 @@ def fill_group():
 
 def fill_category():
     try:
-        db.session.add(Category(name="Math"))
-        db.session.add(Category(name="History"))
-        db.session.add(Category(name="English"))
+        # Přidání kategorií
+        db.session.add(Category(name="Sci-fi"))
+        db.session.add(Category(name="Horror"))
+        db.session.add(Category(name="Comedy"))
+        # Odeslání do databáze
         db.session.commit()
+        # Pokud při 'try' dojde k chybě provede se 'rollback'
+        # a vrátí databázi do původního stavu
     except Exception:
         db.session.rollback()
 
@@ -115,19 +119,19 @@ class MyThreadCreateView(BaseView):
     default_view = "create"
 
     @expose('/create/', methods=['POST'])
-    @has_access  # Zajišťuje, že pouze oprávnění uživatelé mohou vytvářet články
+    @has_access  # Zajistuje, ze pouze opravneni uzivatele mohou vytvaret clanky
     def create(self):
         try:
             # Získání dat z AJAXového požadavku
             data = request.form
 
-            # Vytvoření a uložení nového článku
+            # Vytvoreni a ulozeni noveho clanku
             thread = Thread()
             thread.title = data.get('title')
             thread.content = data.get('content')
             thread.user_id = data.get('user_id')
             thread.category_id = data.get('category_id')
-            # Nastavte další atributy článku
+            # Odeslani do databaze
             db.session.add(thread)
             db.session.commit()
 
