@@ -22,8 +22,3 @@ Instalace
 3. Vytvořte a aktivujte virtuální prostředí: `python -m venv .venv` a `source .venv/bin/activate`
 4. Nainstalujte závislosti: `pip install -r requirements.txt`
 5. Spusťte aplikaci: `flask run`
-
-Autor
------
-
-Tomáš Ryba - ryto04@seznam.cz
