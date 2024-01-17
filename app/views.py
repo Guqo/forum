@@ -35,7 +35,6 @@ def fill_category():
     except Exception:
         db.session.rollback()
 
-
 class GroupModelView(ModelView):
     datamodel = SQLAInterface(Group)
 
@@ -46,22 +45,16 @@ class ForumUserModelView(ModelView):
 
 class ThreadModelView(ModelView):
     datamodel = SQLAInterface(Thread)
-
     label_columns = {"title": "Titulek", "content": "Obsah",
                      "user": "Autor", "category": "Kategorie", "created_at": "Vytvořeno"}
     list_columns = ["title", "category", "user", "created_at"]
-
     base_order = ("created_at", "desc")
-
     show_fieldsets = [
         ("Vlákno", {"fields": ["title", "category", "content", "user", "created_at"]})]
-
     add_fieldsets = [
         ("Vlákno", {"fields": ["title", "category", "content"]})]
-
     edit_fieldsets = [
         ("Vlákno", {"fields": ["title", "category", "content", "user", "created_at"]})]
-
     def pre_add(self, item):
         item.user = db.session.query(ForumUser).filter_by(id=current_user.id).one_or_none()
         super(ThreadModelView, self).pre_add(item)
@@ -121,7 +114,6 @@ class MyThreadCreateView(BaseView):
     @expose('/create/', methods=['POST'])
     @has_access  # Zajistuje, ze pouze opravneni uzivatele mohou vytvaret clanky
     def create(self):
-        try:
             # Získání dat z AJAXového požadavku
             data = request.form
 
@@ -134,13 +126,7 @@ class MyThreadCreateView(BaseView):
             # Odeslani do databaze
             db.session.add(thread)
             db.session.commit()
-
-            # Odpověď pro AJAXový požadavek
-            return jsonify(status="success", message="Článek byl úspěšně vytvořen.")
-        except Exception as e:
-            # V případě chyby vrátíte chybovou zprávu
-            return jsonify(status="error", message=str(e))
-
+            return redirect(self.appbuilder.get_url_for_index())
 
 db.create_all()
 fill_group()

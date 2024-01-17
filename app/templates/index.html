@@ -9,9 +9,6 @@
 {% if appbuilder.sm.has_access('can_add', 'ThreadModelView') %}
 <a href="{{ url_for('ThreadModelView.add') }}"><button type="button" class="btn btn-primary btn-md">
     Create new thread
-</button></a>
-<a href="#" data-toggle="modal" data-target="#createThreadModal"><button type="button" class="btn btn-primary btn-md">
-    Create new thread
 </button></a> {% endif %}
 
 <!-- Zobrazení chatů -->
