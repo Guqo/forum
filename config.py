@@ -127,6 +127,8 @@ IMG_UPLOAD_URL = "/static/uploads/"
 # APP_THEME = "united.css"
 # APP_THEME = "yeti.css"
 
+
+# reCAPTCHA code
 AUTH_TYPE = AUTH_DB
 AUTH_USER_REGISTRATION = True
 AUTH_USER_REGISTRATION_ROLE = 'Logged'
