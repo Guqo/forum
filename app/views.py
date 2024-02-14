@@ -14,7 +14,7 @@ from .models import Group, Category, Thread, ForumUser
 
 log = logging.getLogger(__name__)
 
-
+# přidá do model Category roli Moderator
 def fill_group():
     try:
         db.session.add(Group(name="Moderator"))
@@ -22,6 +22,7 @@ def fill_group():
     except Exception:
         db.session.rollback()
 
+#přidá kategorie do atributu modelu Thread
 def fill_category():
     try:
         # Přidání kategorií
@@ -42,7 +43,7 @@ class GroupModelView(ModelView):
 class ForumUserModelView(ModelView):
     datamodel = SQLAInterface(ForumUser)
 
-
+#definice classy ThreadModelView, přidání řádků na vyplnění informací do databáze
 class ThreadModelView(ModelView):
     datamodel = SQLAInterface(Thread)
     label_columns = {"title": "Titulek", "content": "Obsah",
@@ -66,7 +67,7 @@ class ThreadModelView(ModelView):
         Markup("<p>Delete all Really?</p><p>Ok then...</p>"),
         "fa-rocket",
     )
-
+# funkce umožňující vymazání více článků naráz
     def muldelete(self, items):
         self.datamodel.delete_all(items)
         self.update_redirect()
@@ -107,7 +108,7 @@ class CategoryModelView(ModelView):
     def __init__(self, **kwargs):
         super(ModelView, self).__init__(**kwargs)
         self.list_title = "Seznam kategorií"
-
+# classa umožňující vytvoření Threadu a přidání do databáze, příkaz umožňující aby Thread viděli jen přihlášení uživatelé
 class MyThreadCreateView(BaseView):
     default_view = "create"
 
